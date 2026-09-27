@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import logo from "../assets/1.png";
-import { LuSearch, LuMenu, LuX, LuShoppingBag } from "react-icons/lu";
+import { LuSearch, LuMenu, LuX, LuShoppingBag, LuHouse, LuCandy, LuCookie } from "react-icons/lu";
 import { FaCircleUser } from "react-icons/fa6";
 import { BsCart4 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,6 @@ import { CgLogOut } from "react-icons/cg";
 import { TiInfoLargeOutline } from "react-icons/ti";
 import { authDataContext } from "../contexts/AuthContext";
 import axios from "axios";
-
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -236,6 +235,36 @@ function NavBar() {
       </nav>
 
       {isSearchOpen && <SearchModal onClose={closeSearch} />}
+
+      {/* ================= MOBILE BOTTOM NAVIGATION BAR ================= */}
+      <nav className="fixed bottom-0 left-0 z-40 flex h-[10%] min-h-[64px] w-full items-center justify-center border-t-2 border-dashed border-yellow-300 px-2 lg:hidden">
+        <ul className="flex w-full max-w-md items-center justify-around gap-1">
+          <li className="flex cursor-pointer flex-col items-center justify-center gap-0.5 rounded-2xl bg-[#faae33] px-[12px] py-[6px] text-[10px] font-bold text-[#823513] hover:bg-[#ffcb78]">
+            <LuHouse className="text-[18px]" />
+            <span>HOME</span>
+          </li>
+
+          <li className="flex cursor-pointer flex-col items-center justify-center gap-0.5 rounded-2xl bg-[#faae33] px-[10px] py-[6px] text-[10px] font-bold text-[#823513] hover:bg-[#ffcb78]">
+            <LuCandy className="text-[18px]" />
+            <span>SWEETS</span>
+          </li>
+
+          <li className="flex cursor-pointer flex-col items-center justify-center gap-0.5 rounded-2xl bg-[#faae33] px-[10px] py-[6px] text-[10px] font-bold text-[#823513] hover:bg-[#ffcb78]">
+            <LuCookie className="text-[18px]" />
+            <span>SNACKS</span>
+          </li>
+
+          <li className="relative flex cursor-pointer flex-col items-center justify-center gap-0.5 rounded-2xl bg-[#faae33] px-[12px] py-[6px] text-[10px] font-bold text-[#823513] hover:bg-[#ffcb78]">
+            <div className="relative">
+              <BsCart4 className="text-[18px]" />
+              <span className="absolute -right-2.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#ffcb78] text-[9px] font-bold text-[#823513]">
+                10
+              </span>
+            </div>
+            <span>CART</span>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
