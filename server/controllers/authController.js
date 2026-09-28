@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import validator from "validator";
 import User from "../models/userModel.js";
-import { generateToken } from "../configs/token.js";
+import { generateAdminToken, generateToken } from "../configs/token.js";
 
 
 
@@ -168,5 +168,29 @@ export const googleSignup = async (req, res) => {
     return res.status(500).json({
       message: `googleSignup error: ${error.message}`,
     });
+  }
+}
+
+export const adminLogin = async (req, res) => {
+  try {
+    let { email, password } = req.body;
+    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+      const token = await generateAdminToken(email);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 1 * 24 * 60 * 60 * 1000
+      })
+      return res.status(200).json(token);
+    }
+    return res.status(400).json({
+      message: "Invalid admin credentials"
+    })
+  } catch (error) {
+    console.log("Admin login error");
+    return res.status(500).json({
+      message: "Admin login error"
+    })
   }
 }
