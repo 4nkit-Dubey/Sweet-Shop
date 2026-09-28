@@ -3,6 +3,7 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import logo from "../assets/favicon.png";
 import { useNavigate } from "react-router-dom";
 import { authDataContext } from "../context/AuthContext.jsx";
+import { adminDataContext } from "../context/AdminContext.jsx";
 import axios from "axios";
 
 const ADMIN_LOGIN_ENDPOINT = "/api/auth/adminLogin";
@@ -20,6 +21,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const { serverUrl } = useContext(authDataContext);
   const navigate = useNavigate();
+  const { adminData, getAdmin } = useContext(adminDataContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,22 +31,21 @@ const Login = () => {
       const result = await axios.post(
         serverUrl + ADMIN_LOGIN_ENDPOINT,
         { email, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       console.log(result.data);
-      
+      await getAdmin();
       navigate(ADMIN_HOME);
     } catch (err) {
       console.log(err);
       setError(
         err.response?.data?.message ||
-          "Could not sign in. Check your email and password, then try again."
+          "Could not sign in. Check your email and password, then try again.",
       );
     } finally {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[1.05fr_1fr]">
