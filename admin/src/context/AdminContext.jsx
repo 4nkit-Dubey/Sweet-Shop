@@ -7,7 +7,7 @@ const AdminContext = ({ children }) => {
   let [adminData, setAdminData] = useState(null);
   let { serverUrl } = useContext(authDataContext);
 
-  const getAdminData = async () => {
+  const getAdmin = async () => {
     try {
       let result = await axios.get(serverUrl + "/api/user/admin", {
         withCredentials: true,
@@ -21,13 +21,13 @@ const AdminContext = ({ children }) => {
   };
 
   useEffect(() => {
-    getAdminData();
+    getAdmin();
   }, []);
 
   let value = {
     adminData,
     setAdminData,
-    getAdminData,
+    getAdmin,
   }; 
   return (
     <div>
