@@ -4,11 +4,17 @@ import { FaRegListAlt } from "react-icons/fa";
 import { SiTicktick } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/favicon.png";
+import { TiHomeOutline } from "react-icons/ti";
 
 const Sidebar = () => {
   let navigate = useNavigate();
 
   const menuItems = [
+    {
+      icon: <TiHomeOutline className="w-5 h-5 shrink-0" />,
+      label: "Home",
+      path: "/",
+    },
     {
       icon: <IoMdAddCircleOutline className="w-5 h-5 shrink-0" />,
       label: "Add Items",
