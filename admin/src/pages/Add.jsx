@@ -7,7 +7,7 @@ import uplodImage from "../assets/uploadImage.jpg";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
 
-const quantityOptions = ["1pcs", "500g", "1kg", "2kg", "5kg"];
+const quantityOptions = ["1pcs","100g", "500g", "1kg", "2kg"];
 
 // Shared classes so every field looks the same
 const labelClass = "mb-1.5 block text-sm font-semibold text-[#e3b566]";
@@ -27,6 +27,7 @@ const Add = () => {
   const [bestseller, setBestseller] = useState(false);
   const [quantity, setQunatity] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   let {serverUrl} = useContext(authDataContext);
 
   const imageSlots = [
@@ -57,6 +58,7 @@ const Add = () => {
       return;
     }
 
+    setLoading(true);
     try {
       let formData = new FormData();
       formData.append("image1", image1);
@@ -95,6 +97,8 @@ const Add = () => {
           error.response?.data?.message ||
           "Unable to add product. Please try again.",
       );
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -289,9 +293,13 @@ const Add = () => {
             )}
             <button
               type="submit"
-              className="w-full cursor-pointer rounded-lg bg-[#7f1d1d] px-8 py-3 text-base font-semibold text-white shadow-md ring-1 ring-[#e3b566]/50 transition hover:bg-[#681818] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e3b566] active:scale-[0.98] sm:w-auto"
+              disabled={loading}
+              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#7f1d1d] px-8 py-3 text-base font-semibold text-white shadow-md ring-1 ring-[#e3b566]/50 transition hover:bg-[#681818] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e3b566] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
             >
-              Add product
+              {loading && (
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+              )}
+              {loading ? "Adding product…" : "Add product"}
             </button>
           </form>
         </div>
