@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     category: { type: String, required: true },
     subCategory: { type: String, required: true },
-    quantity: { type: Number, required: true },
+    quantity: { type: [String], required: true },
     date: { type: Number, required: true },
     bestSeller: { type: Boolean, default: false },
   }, { timestamps: true }
