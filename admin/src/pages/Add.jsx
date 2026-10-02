@@ -109,7 +109,7 @@ const Add = () => {
       <Nav />
       <Sidebar />
 
-      <main className="absolute bottom-0 left-16 right-0 top-20 overflow-y-auto overflow-x-hidden md:left-[18%]">
+      <main className="absolute bottom-0 left-0 right-0 top-20 overflow-y-auto overflow-x-hidden md:left-[18%] pb-16 md:pb-0">
         <div className="px-4 py-6 sm:px-6 lg:px-10">
           <form
             action=""
