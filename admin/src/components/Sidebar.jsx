@@ -33,26 +33,43 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-16 md:w-[18%] min-h-screen py-20 fixed left-0 top-0 z-30">
-      <div className="w-full h-screen border-r-2 border-dashed border-[#e3b566]">
+    <>
+      {/* ── DESKTOP SIDEBAR (md and above) ── */}
+      <div className="hidden md:block w-[18%] min-h-screen py-20 fixed left-0 top-0 z-30">
+        <div className="w-full h-screen border-r-2 border-dashed border-[#e3b566]">
+          <div className="flex flex-col gap-3 pt-10 pl-[20%] text-[15px]">
+            {menuItems.map((item) => (
+              <div
+                key={item.path}
+                title={item.label}
+                className="flex items-center justify-start gap-3 border-2 border-gray-200 border-r-0 px-3 py-2 cursor-pointer hover:bg-[#2c7b89] text-white font-bold transition-colors duration-200"
+                onClick={() => navigate(item.path)}
+              >
+                {item.icon}
+                <span className="whitespace-nowrap">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-
-        {/* Menu Items */}
-        <div className="flex flex-col gap-3 pt-4 pl-[20%]  md:pt-10 md:pl-[20%] text-[15px]">
+      {/* ── MOBILE BOTTOM BAR (below md) ── */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t-2 border-dashed border-[#e3b566]  backdrop-blur-md">
+        <div className="flex items-center justify-around py-2">
           {menuItems.map((item) => (
-            <div
+            <button
               key={item.path}
               title={item.label}
-              className="flex items-center justify-center md:justify-start gap-3 border-2 border-gray-200 border-r-0 px-2 md:px-3 py-2 cursor-pointer hover:bg-[#2c7b89] text-white font-bold transition-colors duration-200"
               onClick={() => navigate(item.path)}
+              className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl text-white cursor-pointer hover:text-[#e3b566] hover:bg-[#e3b566]/15 active:bg-[#e3b566]/25 transition-all duration-200"
             >
               {item.icon}
-              <span className="hidden md:inline whitespace-nowrap">{item.label}</span>
-            </div>
+              <span className="text-[9px] font-semibold tracking-wide">{item.label}</span>
+            </button>
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
