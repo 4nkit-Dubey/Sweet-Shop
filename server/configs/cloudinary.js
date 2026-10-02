@@ -7,16 +7,15 @@ const uploadOnCloudinary = async (filepath) => {
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
+  if (!filepath) {
+    throw new Error('Image file is required');
+  }
+
   try {
-    if (!filepath) {
-      return null;
-    }
     const uploadResult = await cloudinary.uploader.upload(filepath);
-    fs.unlinkSync(filepath);
     return uploadResult.secure_url;
-  } catch (error) {
-    fs.unlinkSync(filepath);
-    console.error('Error uploading to Cloudinary:', error);
+  } finally {
+    await fs.promises.unlink(filepath).catch(() => {});
   }
 
 }

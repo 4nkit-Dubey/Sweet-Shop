@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import bgimage from "../assets/background-image.png";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
 import uplodImage from "../assets/uploadImage.jpg";
+import { authDataContext } from "../context/AuthContext";
+import axios from "axios";
 
-const quantityOptions = ["500g", "1kg", "2kg", "5kg"];
+const quantityOptions = ["1pcs", "500g", "1kg", "2kg", "5kg"];
 
 // Shared classes so every field looks the same
 const labelClass = "mb-1.5 block text-sm font-semibold text-[#e3b566]";
@@ -24,6 +26,8 @@ const Add = () => {
   const [price, setPrice] = useState("");
   const [bestseller, setBestseller] = useState(false);
   const [quantity, setQunatity] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  let {serverUrl} = useContext(authDataContext);
 
   const imageSlots = [
     { id: "image1", file: image1, setFile: setImage1 },
@@ -39,6 +43,60 @@ const Add = () => {
         : [...prev, size],
     );
 
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+
+    if (imageSlots.some(({ file }) => !file)) {
+      setErrorMessage("Please upload all four product images.");
+      return;
+    }
+
+    if (quantity.length === 0) {
+      setErrorMessage("Please select at least one product quantity.");
+      return;
+    }
+
+    try {
+      let formData = new FormData();
+      formData.append("image1", image1);
+      formData.append("image2", image2);
+      formData.append("image3", image3);
+      formData.append("image4", image4);
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("category", category);
+      formData.append("subCategory", subcategory);
+      formData.append("price", price);
+      formData.append("bestSeller", bestseller);
+      formData.append("quantity", JSON.stringify(quantity));
+
+      let result = await axios.post(serverUrl + "/api/product/addproduct", formData, { withCredentials: true });
+
+      console.log(result.data);
+
+      if (result.data){
+        setName("");
+        setDescription("");
+        setCategory("Sweets");
+        setSubCategory("Deliverable");
+        setPrice("");
+        setBestseller(false);
+        setQunatity([]);
+        setImage1(false);
+        setImage2(false);
+        setImage3(false);
+        setImage4(false);
+      }
+    } catch (error) {
+      console.error("Error adding product:", error.response?.data || error);
+      setErrorMessage(
+        error.response?.data?.error ||
+          error.response?.data?.message ||
+          "Unable to add product. Please try again.",
+      );
+    }
+  };
   return (
     <div
       className="fixed inset-0 overflow-hidden bg-cover bg-center"
@@ -47,11 +105,11 @@ const Add = () => {
       <Nav />
       <Sidebar />
 
-
       <main className="absolute bottom-0 left-16 right-0 top-20 overflow-y-auto overflow-x-hidden md:left-[18%]">
         <div className="px-4 py-6 sm:px-6 lg:px-10">
           <form
             action=""
+            onSubmit={handleAddProduct}
             className="mx-auto w-full max-w-4xl rounded-2xl border-2 border-dashed border-[#e3b566]/70 p-4 shadow-2xl backdrop-blur-sm sm:p-6 lg:p-8"
           >
             {/* Heading */}
@@ -224,6 +282,11 @@ const Add = () => {
             </label>
 
             {/* Submit */}
+            {errorMessage && (
+              <p className="mb-4 text-sm text-red-300" role="alert">
+                {errorMessage}
+              </p>
+            )}
             <button
               type="submit"
               className="w-full cursor-pointer rounded-lg bg-[#7f1d1d] px-8 py-3 text-base font-semibold text-white shadow-md ring-1 ring-[#e3b566]/50 transition hover:bg-[#681818] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e3b566] active:scale-[0.98] sm:w-auto"
