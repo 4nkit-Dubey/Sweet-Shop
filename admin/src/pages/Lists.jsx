@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
-import bgimage from "../assets/background-image.png";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
 
@@ -41,8 +40,7 @@ const Lists = () => {
   }, []);
   return (
     <div
-      className="fixed inset-0 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: `url(${bgimage})` }}
+      className="fixed inset-0 overflow-hidden bg-gradient-to-b from-[#141414] to-[#0c2025]"
     >
       <Nav />
       <Sidebar />

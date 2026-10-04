@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { FaCheck } from "react-icons/fa";
-import bgimage from "../assets/background-image.png";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
 import uplodImage from "../assets/uploadImage.jpg";
@@ -103,8 +102,7 @@ const Add = () => {
   };
   return (
     <div
-      className="fixed inset-0 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: `url(${bgimage})` }}
+      className="fixed inset-0 overflow-hidden bg-gradient-to-b from-[#141414] to-[#0c2025]"
     >
       <Nav />
       <Sidebar />

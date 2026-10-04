@@ -54,14 +54,14 @@ const Sidebar = () => {
       </div>
 
       {/* ── MOBILE BOTTOM BAR (below md) ── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t-2 border-dashed border-[#e3b566]  backdrop-blur-md">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t-2 border-dashed border-[#e3b566] bg-[#ecfafaec]">
         <div className="flex items-center justify-around py-2">
           {menuItems.map((item) => (
             <button
               key={item.path}
               title={item.label}
               onClick={() => navigate(item.path)}
-              className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl text-white cursor-pointer hover:text-[#e3b566] hover:bg-[#e3b566]/15 active:bg-[#e3b566]/25 transition-all duration-200"
+              className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl text-[#3b0d0d] cursor-pointer hover:text-[#7f1d1d] hover:bg-[#e3b566]/15 active:bg-[#e3b566]/25 transition-all duration-200"
             >
               {item.icon}
               <span className="text-[9px] font-semibold tracking-wide">{item.label}</span>
