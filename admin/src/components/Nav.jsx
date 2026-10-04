@@ -22,7 +22,7 @@ const Nav = () => {
     }
   }
   return (
-    <nav className="fixed left-0 top-0 z-40 flex h-20 w-full items-center justify-between gap-4 border-b-2 border-dashed border-[#e3b566] px-4 sm:px-8">
+    <nav className="fixed left-0 top-0 z-40 flex h-20 w-full items-center justify-between gap-4 border-b-2 border-dashed border-[#e3b566] bg-[#ecfafaec] px-4 sm:px-8">
           {/* ================= LEFT : LOGO + NAME ================= */}
           <div className="flex min-w-0 items-center gap-3">
             <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#7f1d1d] ring-1 ring-[#e3b566]/60 sm:h-12 sm:w-12">
@@ -34,10 +34,10 @@ const Nav = () => {
             </div>
     
             <div className="min-w-0 leading-tight">
-              <span className="block truncate font-serif text-base font-bold tracking-tight text-white sm:text-xl">
+              <span className="block truncate font-serif text-base font-bold tracking-tight text-[#3b0d0d] sm:text-xl">
                 Maa Vindhyavasini Sweets
               </span>
-              <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-white /70 sm:text-xs">
+              <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-[#7f1d1d] sm:text-xs">
                 Admin panel
               </span>
             </div>
