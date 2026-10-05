@@ -1,9 +1,12 @@
 import React from "react";
+import LatestCollections from "../components/LatestCollections";
+import BestSeller from "../components/BestSeller";
 
 const Product = () => {
   return (
-    <div className="w-full h-[100vh] flex items-center justify-start flex-col py-[20px]">
-      
+    <div className="w-full bg-gradient-to-b from-[#0c2025] to-[#141414]">
+      <LatestCollections />
+      <BestSeller />
     </div>
   );
 };

@@ -48,7 +48,7 @@ const Nav = () => {
             type="button"
             aria-label="Logout"
             title="Logout"
-            className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg bg-[#7f1d1d] px-3 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-[#681818] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7f1d1d] focus-visible:ring-offset-2 active:scale-[0.98] sm:px-4"
+            className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg bg-[#000000c9] px-3 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7f1d1d] focus-visible:ring-offset-2 active:scale-[0.98] sm:px-4"
             onClick={handleLogout}
           >
             <CgLogOut className="text-[18px]" />

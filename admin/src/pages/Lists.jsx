@@ -40,7 +40,7 @@ const Lists = () => {
   }, []);
   return (
     <div
-      className="fixed inset-0 overflow-hidden bg-gradient-to-b from-[#141414] to-[#0c2025]"
+      className="fixed inset-0 overflow-hidden bg-gradient-to-l from-[#141414] to-[#0c2025]"
     >
       <Nav />
       <Sidebar />
