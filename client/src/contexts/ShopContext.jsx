@@ -12,9 +12,9 @@ const ShopContext = ({ children }) => {
 
   const getProducts = async () => {
     try {
-      let result = await axios.get(serverUrl + "/api/products/list");
+      let result = await axios.get(serverUrl + "/api/product/list");
       console.log(result.data);
-      setProducts(result.data);
+      setProducts(result.data.product);
     } catch (error) {
       console.log("Error fetching products:", error);
     }

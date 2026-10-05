@@ -1,11 +1,48 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from "react";
+import Title from "./Title";
+import { shopDataContext } from "../contexts/ShopContext";
+import Card from "./Card";
 
 const BestSeller = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const { products } = useContext(shopDataContext);
+  const [bestSellers, setBestSellers] = useState([]);
 
-export default BestSeller
+  useEffect(() => {
+    // Show the next 4 products after LatestCollections (index 8-11) as best sellers
+    // In future, filter by a `bestseller` flag from backend
+    const filtered = products.filter((p) => p.bestseller).slice(0, 4);
+    setBestSellers(filtered.length > 0 ? filtered : products.slice(8, 12));
+  }, [products]);
+
+  if (bestSellers.length === 0) return null;
+
+  return (
+    <section className="w-full py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+      {/* Thin separator */}
+      <div className="w-full max-w-4xl mx-auto mb-12 h-px bg-gradient-to-r from-transparent via-[#a5faf7]/30 to-transparent" />
+
+      {/* Section header */}
+      <div className="text-center mb-10">
+        <Title text1="BEST" text2="SELLERS" />
+        <p className="max-w-xl mx-auto text-sm md:text-base text-blue-200/80 leading-relaxed mt-3">
+          Our customers' all-time favourites — tried, tested & loved!
+        </p>
+      </div>
+
+      {/* Products grid */}
+      <div className="flex flex-wrap items-start justify-center gap-4 sm:gap-6 lg:gap-8">
+        {bestSellers.map((item, index) => (
+          <Card
+            key={item._id ?? index}
+            name={item.name}
+            image={item.image1}
+            id={item._id}
+            price={item.price}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default BestSeller;

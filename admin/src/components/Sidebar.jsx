@@ -42,7 +42,7 @@ const Sidebar = () => {
               <div
                 key={item.path}
                 title={item.label}
-                className="flex items-center justify-start gap-3 border-2 border-gray-200 border-r-0 px-3 py-2 cursor-pointer hover:bg-[#2c7b89] text-white font-bold transition-colors duration-200"
+                className="flex items-center justify-start gap-3 border-2 border-gray-200 border-r-0 bg-[#000000c9] px-3 py-2 cursor-pointer text-white font-bold transition-colors duration-200 hover:bg-slate-500"
                 onClick={() => navigate(item.path)}
               >
                 {item.icon}
@@ -61,7 +61,7 @@ const Sidebar = () => {
               key={item.path}
               title={item.label}
               onClick={() => navigate(item.path)}
-              className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl text-[#3b0d0d] cursor-pointer hover:text-[#7f1d1d] hover:bg-[#e3b566]/15 active:bg-[#e3b566]/25 transition-all duration-200"
+              className="flex flex-col items-center gap-0.5 rounded-xl bg-[#000000c9] px-4 py-1.5 text-white cursor-pointer hover:bg-slate-500 active:bg-slate-500 transition-all duration-200"
             >
               {item.icon}
               <span className="text-[9px] font-semibold tracking-wide">{item.label}</span>
