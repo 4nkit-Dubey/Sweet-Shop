@@ -13,13 +13,27 @@ const Snacks = () => {
   const [deliveryFilter, setDeliveryFilter] = useState([]); // [] | ['Deliverable'] | ['NON-Deliverable'] | both
   const [showBestseller, setShowBestseller] = useState(false);
 
-  // Sort state (UI only — logic will be added later)
-  const [sortType, setSortType] = useState("recent");
+  // Sort state
+  const [sortType, setSortType] = useState("relevant");
 
   // Mobile filter panel toggle
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-  // Filter products whenever source data or filters change
+  // Sort function with switch case
+  const sortProducts = (list, type) => {
+    let sorted = [...list];
+    switch (type) {
+      case "low-high":
+        return sorted.sort((a, b) => a.price - b.price);
+      case "high-low":
+        return sorted.sort((a, b) => b.price - a.price);
+      default:
+        // 'relevant' / default - keep original order
+        return sorted;
+    }
+  };
+
+  // Filter and sort products whenever source data, filters, or sort type change
   useEffect(() => {
     let filtered = products.filter((p) => p.category === "Snacks");
 
@@ -33,8 +47,10 @@ const Snacks = () => {
       filtered = filtered.filter((p) => p.bestSeller === true);
     }
 
-    setProductsCopy(filtered);
-  }, [products, deliveryFilter, showBestseller]);
+    // Apply sort
+    const finalProducts = sortProducts(filtered, sortType);
+    setProductsCopy(finalProducts);
+  }, [products, deliveryFilter, showBestseller, sortType]);
 
   const toggleDeliveryFilter = (value) => {
     setDeliveryFilter((prev) =>
@@ -142,7 +158,7 @@ const Snacks = () => {
                 onChange={(e) => setSortType(e.target.value)}
                 className="w-full cursor-pointer rounded-xl border border-white/20 bg-black/40 px-3 py-2.5 text-sm text-[#c3f6fa] outline-none focus:border-[#a5faf7]"
               >
-                <option value="recent">Recent Products</option>
+                <option value="relevant">Relevant</option>
                 <option value="low-high">Price: Low to High</option>
                 <option value="high-low">Price: High to Low</option>
               </select>
@@ -190,7 +206,7 @@ const Snacks = () => {
                 onChange={(e) => setSortType(e.target.value)}
                 className="cursor-pointer rounded-xl border border-white/20 bg-black/40 px-3 py-2 text-sm text-[#c3f6fa] outline-none transition focus:border-[#a5faf7]"
               >
-                <option value="recent">Recent Products</option>
+                <option value="relevant">Relevant</option>
                 <option value="low-high">Price: Low to High</option>
                 <option value="high-low">Price: High to Low</option>
               </select>
