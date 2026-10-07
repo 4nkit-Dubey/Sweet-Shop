@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import Background from "../components/Background";
 import Hero from "../components/Hero";
 import Product from "./Product";
+import OurPolicy from "../components/OurPolicy";
+import NewLetterBox from "../components/NewLetterBox";
+import Footer from "../components/Footer";
 
 function Home() {
   const [heroCount, setHeroCount] = useState(0);
@@ -32,6 +35,9 @@ function Home() {
 
       {/* Products section (Latest Collections + Best Sellers) */}
       <Product />
+      <OurPolicy />
+      <NewLetterBox />
+      <Footer />
 
       {/* Bottom padding for mobile bottom nav */}
       <div className="h-[72px] lg:hidden shrink-0" />
