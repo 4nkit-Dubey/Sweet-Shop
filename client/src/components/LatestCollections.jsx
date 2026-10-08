@@ -12,7 +12,7 @@ const LatestCollections = () => {
   }, [products]);
 
   return (
-    <section className="w-full py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+    <section className="mx-auto w-full max-w-7xl py-12 px-4 sm:px-6 md:py-16 lg:px-8">
       {/* Section header */}
       <div className="text-center mb-10">
         <Title text1="LATEST" text2="COLLECTIONS" />
@@ -27,7 +27,7 @@ const LatestCollections = () => {
           <p className="text-blue-200/50 text-sm">Loading products...</p>
         </div>
       ) : (
-        <div className="flex flex-wrap items-start justify-center gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-8">
           {latestProducts.map((item, index) => (
             <Card
               key={item._id ?? index}

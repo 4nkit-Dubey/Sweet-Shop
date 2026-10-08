@@ -5,7 +5,10 @@ import NewLetterBox from '../components/NewLetterBox'
 
 const About = () => {
   return (
-    <div className='w-full min-h-screen flex items-center justify-center flex-col bg-gradient-to-b from-[#0c2025] via-[#0f2a31] to-[#141414] px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16 overflow-x-hidden gap-12 sm:gap-16'>
+    <div className='w-full min-h-screen flex items-center justify-center flex-col bg-gradient-to-b from-[#0c2025] via-[#0f2a31] to-[#141414] px-4 sm:px-6 lg:px-8 pb-16 overflow-x-hidden gap-12 sm:gap-16'>
+      {/* Spacer for fixed navbar */}
+      <div className="h-[10vh] min-h-[80px] w-full shrink-0 sm:h-[12vh]" />
+
       <div className='w-full max-w-6xl mx-auto flex flex-col items-center'>
         <Title text1={'ABOUT'} text2={'US'} />
       </div>
@@ -68,6 +71,9 @@ const About = () => {
       </div>
 
       <NewLetterBox />
+
+      {/* Bottom padding for mobile bottom nav */}
+      <div className="h-[80px] shrink-0 lg:hidden" />
     </div>
   )
 }

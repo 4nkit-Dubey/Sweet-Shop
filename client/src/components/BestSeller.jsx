@@ -17,7 +17,7 @@ const BestSeller = () => {
   if (bestSellers.length === 0) return null;
 
   return (
-    <section className="w-full py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+    <section className="mx-auto w-full max-w-7xl py-12 px-4 sm:px-6 md:py-16 lg:px-8">
       {/* Thin separator */}
       <div className="w-full max-w-4xl mx-auto mb-12 h-px bg-gradient-to-r from-transparent via-[#a5faf7]/30 to-transparent" />
 
@@ -30,7 +30,7 @@ const BestSeller = () => {
       </div>
 
       {/* Products grid */}
-      <div className="flex flex-wrap items-start justify-center gap-4 sm:gap-6 lg:gap-8">
+      <div className="grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-8">
         {bestSellers.map((item, index) => (
           <Card
             key={item._id ?? index}
