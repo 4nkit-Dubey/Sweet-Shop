@@ -11,6 +11,7 @@ import Snacks from "./pages/Snacks";
 import Product from "./pages/Product";
 import { useContext } from "react";
 import { userDataContext } from "./contexts/UserContext";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   let { userData } = useContext(userDataContext);
@@ -102,6 +103,16 @@ function App() {
           element={
             userData ? (
               <Snacks />
+            ) : (
+              <Navigate to="/login" state={{ from: location.pathname }} />
+            )
+          }
+        />
+        <Route
+          path="/productdetail/:productId"
+          element={
+            userData ? (
+              <ProductDetails/>
             ) : (
               <Navigate to="/login" state={{ from: location.pathname }} />
             )

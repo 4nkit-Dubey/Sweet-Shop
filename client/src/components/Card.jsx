@@ -8,8 +8,8 @@ const Card = ({ name, image, id, price }) => {
 
   return (
     <div
-      // onClick={() => navigate(`/product/${id}`)}
-      className="group w-[160px] sm:w-[200px] md:w-[230px] lg:w-[260px] bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-[#a5faf7]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(165,250,247,0.15)] hover:-translate-y-1"
+      onClick={() => navigate(`/productdetail/${id}`)}
+      className="group flex h-full w-full flex-col bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-[#a5faf7]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(165,250,247,0.15)] hover:-translate-y-1"
     >
       {/* Image container */}
       <div className="relative w-full aspect-square overflow-hidden">
