@@ -275,7 +275,9 @@ function NavBar() {
           <li className="relative flex cursor-pointer flex-col items-center justify-center gap-0.5 rounded-2xl bg-[#000000c9] px-[12px] py-[6px] text-[10px] font-bold text-white hover:bg-slate-500" onClick={() => navigate("/cart")}>
             <div className="relative">
               <BsCart4 className="text-[18px]" />
-              <span className="absolute -right-2.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#ffcb78] text-[9px] font-bold text-[#823513]">
+              <span className="absolute -right-2.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#ffcb78] text-[9px] font-bold text-[#823513]"
+              onClick={()=>navigate("/cart")}
+              >
                 {getCartCount()}
               </span>
             </div>

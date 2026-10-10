@@ -12,6 +12,8 @@ import Product from "./pages/Product";
 import { useContext } from "react";
 import { userDataContext } from "./contexts/UserContext";
 import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
+import PlaceOrder from "./pages/PlaceOrder";
 
 function App() {
   let { userData } = useContext(userDataContext);
@@ -112,7 +114,27 @@ function App() {
           path="/productdetail/:productId"
           element={
             userData ? (
-              <ProductDetails/>
+              <ProductDetails />
+            ) : (
+              <Navigate to="/login" state={{ from: location.pathname }} />
+            )
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            userData ? (
+              <Cart />
+            ) : (
+              <Navigate to="/login" state={{ from: location.pathname }} />
+            )
+          }
+        />
+        <Route
+          path="/placeorder"
+          element={
+            userData ? (
+              <PlaceOrder />
             ) : (
               <Navigate to="/login" state={{ from: location.pathname }} />
             )
