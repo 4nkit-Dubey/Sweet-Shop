@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { use, useContext, useState } from "react";
 import logo from "../assets/1.png";
 import { LuSearch, LuMenu, LuX, LuShoppingBag, LuHouse, LuCandy, LuCookie } from "react-icons/lu";
 import { FaCircleUser } from "react-icons/fa6";
@@ -12,6 +12,7 @@ import { CgLogOut } from "react-icons/cg";
 import { TiInfoLargeOutline } from "react-icons/ti";
 import { authDataContext } from "../contexts/AuthContext";
 import axios from "axios";
+import { shopDataContext } from "../contexts/ShopContext";
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,6 +22,7 @@ function NavBar() {
   const navigate = useNavigate();
   const closeSearch = () => setIsSearchOpen(false);
   const { serverUrl } = useContext(authDataContext);
+  const {getCartCount} = useContext(shopDataContext);
 
   const handleLogout = async () => {
     try {
@@ -118,7 +120,7 @@ function NavBar() {
             >
               <BsCart4 />
               <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#ffcb78] text-[11px] font-bold text-[#823513]">
-                10
+                {getCartCount()}
               </span>
             </button>
           </div>
@@ -274,7 +276,7 @@ function NavBar() {
             <div className="relative">
               <BsCart4 className="text-[18px]" />
               <span className="absolute -right-2.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#ffcb78] text-[9px] font-bold text-[#823513]">
-                10
+                {getCartCount()}
               </span>
             </div>
             <span>CART</span>
