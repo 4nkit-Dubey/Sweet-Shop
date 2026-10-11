@@ -1,16 +1,19 @@
-okay ji dost.
-le fr aa gya mai kaam leke aapke liye.
+achha bro ek important changes karna hai.
+
+pure admin folder me.
+issme style me chnages karna hai.
+
+jaise ki dashed border ka color abhi wala toh match nhi kar raha hai i sugget white.
 
 
-tumhare pichhla styling wala kaam kaafi achha tha.
-So iss baar bhi tumko same kaam karna hai.
+kaisa bhi border ho sabko replace karo sarre golden ya yellow borders ko replace karo kisi matching se.
 
-tumko inn do pages me responsive, existing theme se matching styling(tailwind) add karna hai.
 
-a) Order.jsx : "client\src\pages\Order.jsx"
-b)PlaceOrder.jsx : "client\src\pages\PlaceOrder.jsx"
+buttons ke color ko bhi red se change kar ke kuchh aur karo. suggestion gray.
 
-chuki maine pahle se hi hmtl and functions ko likh rakha hai.
-tuh tumko uss side pr kaam karna ka tension nhi hai.
+ye yellow, golden aur red color ke component mere website se  match nhi kha rahe hai
 
-but ek kaam karna check kar lena ki working function ka sahi hai.
+
+
+orders waale page me bg set karo match karta hau gradient wala. 
+abhi toh pura white pada hai jiske wajah se kuchh bhi dikhi nhi de raha hai.

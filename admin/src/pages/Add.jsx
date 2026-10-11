@@ -9,9 +9,9 @@ import axios from "axios";
 const quantityOptions = ["1pcs","100g", "500g", "1kg", "2kg"];
 
 // Shared classes so every field looks the same
-const labelClass = "mb-1.5 block text-sm font-semibold text-[#e3b566]";
+const labelClass = "mb-1.5 block text-sm font-semibold text-[#a5faf7]";
 const fieldClass =
-  "w-full rounded-lg border border-[#e3b566]/40 bg-black/30 px-4 py-2.5 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-[#e3b566] focus:ring-2 focus:ring-[#e3b566]/40 sm:text-base";
+  "w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2.5 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-[#a5faf7] focus:ring-2 focus:ring-[#a5faf7]/30 sm:text-base";
 
 const Add = () => {
   let [image1, setImage1] = useState(false);
@@ -102,7 +102,7 @@ const Add = () => {
   };
   return (
     <div
-      className="fixed inset-0 overflow-hidden bg-gradient-to-l from-[#141414] to-[#0c2025]"
+      className="fixed inset-0 overflow-hidden bg-gradient-to-br from-[#0c2025] via-[#10282e] to-[#141414]"
     >
       <Nav />
       <Sidebar />
@@ -112,10 +112,10 @@ const Add = () => {
           <form
             action=""
             onSubmit={handleAddProduct}
-            className="mx-auto w-full max-w-4xl rounded-2xl border-2 border-dashed border-[#e3b566]/70 p-4 shadow-2xl backdrop-blur-sm sm:p-6 lg:p-8"
+            className="mx-auto w-full max-w-4xl rounded-2xl border-2 border-dashed border-white/50 p-4 shadow-2xl backdrop-blur-sm sm:p-6 lg:p-8"
           >
             {/* Heading */}
-            <div className="mb-6 border-b border-dashed border-[#e3b566]/40 pb-4">
+            <div className="mb-6 border-b border-dashed border-white/25 pb-4">
               <h1 className="font-serif text-2xl font-bold tracking-tight text-white sm:text-3xl">
                 Add product
               </h1>
@@ -132,7 +132,7 @@ const Add = () => {
                   <label
                     key={slot.id}
                     htmlFor={slot.id}
-                    className="group relative block aspect-square cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-[#e3b566]/60 bg-black/30 transition hover:border-[#e3b566]"
+                    className="group relative block aspect-square cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-white/45 bg-black/30 transition hover:border-white/80"
                   >
                     <img
                       src={
@@ -249,10 +249,10 @@ const Add = () => {
                       type="button"
                       aria-pressed={selected}
                       onClick={() => toggleQuantity(size)}
-                      className={`flex min-w-22 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 px-4 py-2 text-sm font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e3b566] focus-visible:ring-offset-2 focus-visible:ring-offset-black/60 active:scale-95 ${
+                      className={`flex min-w-22 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 px-4 py-2 text-sm font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5faf7] focus-visible:ring-offset-2 focus-visible:ring-offset-black/60 active:scale-95 ${
                         selected
-                          ? "border-[#e3b566] bg-[#e3b566] text-[#3b0d0d] shadow-lg shadow-[#e3b566]/30"
-                          : "border-white/30 bg-black/30 text-white/80 hover:border-[#e3b566]/70 hover:text-white"
+                          ? "border-[#a5faf7] bg-[#a5faf7] text-[#0c2025] shadow-lg shadow-[#a5faf7]/20"
+                          : "border-white/30 bg-black/30 text-white/80 hover:border-white/70 hover:text-white"
                       }`}
                     >
                       {selected && <FaCheck className="text-xs" />}
@@ -271,12 +271,12 @@ const Add = () => {
             {/* Bestseller */}
             <label
               htmlFor="checkbox"
-              className="mb-6 flex w-full cursor-pointer items-center gap-3 rounded-lg border border-[#e3b566]/40 bg-black/30 px-4 py-3 text-sm font-medium text-white transition hover:border-[#e3b566] sm:w-fit sm:text-base"
+              className="mb-6 flex w-full cursor-pointer items-center gap-3 rounded-lg border border-white/20 bg-black/30 px-4 py-3 text-sm font-medium text-white transition hover:border-white/50 sm:w-fit sm:text-base"
             >
               <input
                 type="checkbox"
                 id="checkbox"
-                className="h-5 w-5 cursor-pointer accent-[#e3b566]"
+                className="h-5 w-5 cursor-pointer accent-[#a5faf7]"
                 checked={bestseller}
                 onChange={() => setBestseller((prev) => !prev)}
               />
@@ -285,14 +285,14 @@ const Add = () => {
 
             {/* Submit */}
             {errorMessage && (
-              <p className="mb-4 text-sm text-red-300" role="alert">
+              <p className="mb-4 text-sm text-[#a5faf7]" role="alert">
                 {errorMessage}
               </p>
             )}
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#7f1d1d] px-8 py-3 text-base font-semibold text-white shadow-md ring-1 ring-[#e3b566]/50 transition hover:bg-[#681818] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e3b566] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-slate-700 px-8 py-3 text-base font-semibold text-white shadow-md ring-1 ring-white/20 transition hover:bg-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5faf7] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
             >
               {loading && (
                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />

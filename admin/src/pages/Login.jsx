@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import logo from "../assets/favicon.png";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ const ADMIN_LOGIN_ENDPOINT = "/api/auth/adminLogin";
 const ADMIN_HOME = "/";
 
 // Jaali (lattice) pattern for the left panel — pure SVG, no extra image needed
-const jaaliSvg = `<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'><g fill='none' stroke='#e3b566' stroke-opacity='0.16' stroke-width='1'><path d='M28 2 54 28 28 54 2 28Z'/><circle cx='28' cy='28' r='9'/><path d='M0 0H6L0 6ZM56 0H50L56 6ZM0 56H6L0 50ZM56 56H50L56 50Z'/></g></svg>`;
+const jaaliSvg = `<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'><g fill='none' stroke='#a5faf7' stroke-opacity='0.16' stroke-width='1'><path d='M28 2 54 28 28 54 2 28Z'/><circle cx='28' cy='28' r='9'/><path d='M0 0H6L0 6ZM56 0H50L56 6ZM0 56H6L0 50ZM56 56H50L56 50Z'/></g></svg>`;
 const jaaliPattern = `url("data:image/svg+xml,${encodeURIComponent(jaaliSvg)}")`;
 
 const Login = () => {
@@ -21,7 +21,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const { serverUrl } = useContext(authDataContext);
   const navigate = useNavigate();
-  const { adminData, getAdmin } = useContext(adminDataContext);
+  const { getAdmin } = useContext(adminDataContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,18 +51,18 @@ const Login = () => {
     <div className="grid min-h-screen lg:grid-cols-[1.05fr_1fr]">
       {/* ================= LEFT : BRAND PANEL ================= */}
       <div
-        className="relative hidden flex-col justify-between overflow-hidden bg-[#2b0b0b] p-12 text-[#f5e9d3] lg:flex"
+        className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-br from-[#0c2025] via-[#10282e] to-[#141414] p-12 text-white lg:flex"
         style={{ backgroundImage: jaaliPattern }}
       >
         <div className="flex items-center gap-3">
-          <div className="h-11 w-11 overflow-hidden rounded-full bg-[#7f1d1d] ring-1 ring-[#e3b566]/50">
+          <div className="h-11 w-11 overflow-hidden rounded-full bg-[#0c2025] ring-1 ring-white/40">
             <img src={logo} alt="logo" className="h-full w-full" />
           </div>
           <div>
             <h2 className="text-sm font-semibold tracking-tight">
               Maa Vindhyavasini Sweets
             </h2>
-            <p className="text-xs text-[#f5e9d3]/60">Admin console</p>
+            <p className="text-xs text-white/60">Admin console</p>
           </div>
         </div>
 
@@ -70,12 +70,12 @@ const Login = () => {
           <h1 className="font-serif text-4xl leading-[1.15] tracking-tight xl:text-5xl">
             Everything behind the counter, in one place.
           </h1>
-          <p className="mt-5 text-sm leading-6 text-[#f5e9d3]/70">
+          <p className="mt-5 text-sm leading-6 text-white/70">
             Manage orders, menu items, reservations and customers for the shop.
           </p>
         </div>
 
-        <p className="text-xs text-[#f5e9d3]/50">Authorized staff only.</p>
+        <p className="text-xs text-white/50">Authorized staff only.</p>
       </div>
 
       {/* ================= RIGHT : LOGIN FORM ================= */}
@@ -83,7 +83,7 @@ const Login = () => {
         <div className="w-full max-w-sm">
           {/* Brand (mobile only — desktop pe left panel me hai) */}
           <div className="mb-10 flex items-center gap-3 lg:hidden">
-            <div className="h-10 w-10 overflow-hidden rounded-full bg-[#7f1d1d]">
+            <div className="h-10 w-10 overflow-hidden rounded-full bg-[#0c2025]">
               <img src={logo} alt="logo" className="h-full w-full" />
             </div>
             <div>
@@ -118,7 +118,7 @@ const Login = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg border border-stone-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#7f1d1d] focus:ring-2 focus:ring-[#7f1d1d]/15"
+                className="w-full rounded-lg border border-stone-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#167a78] focus:ring-2 focus:ring-[#167a78]/15"
               />
             </div>
 
@@ -139,13 +139,13 @@ const Login = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-lg border border-stone-300 bg-white px-4 py-3 pr-12 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#7f1d1d] focus:ring-2 focus:ring-[#7f1d1d]/15"
+                  className="w-full rounded-lg border border-stone-300 bg-white px-4 py-3 pr-12 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#167a78] focus:ring-2 focus:ring-[#167a78]/15"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer rounded-md p-2 text-gray-400 transition hover:bg-stone-100 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7f1d1d]/30"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer rounded-md p-2 text-gray-400 transition hover:bg-stone-100 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#167a78]/30"
                 >
                   {showPassword ? <VscEye /> : <VscEyeClosed />}
                 </button>
@@ -156,7 +156,7 @@ const Login = () => {
             {error && (
               <div
                 role="alert"
-                className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs leading-5 text-red-800"
+                className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-700"
               >
                 {error}
               </div>
@@ -166,7 +166,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#7f1d1d] px-5 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-[#681818] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7f1d1d] focus-visible:ring-offset-2 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-slate-700 px-5 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#167a78] focus-visible:ring-offset-2 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {loading && (
                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
@@ -178,7 +178,7 @@ const Login = () => {
           <button
             type="button"
             onClick={() => navigate("/")}
-            className="mt-8 cursor-pointer text-xs font-medium text-gray-500 transition hover:text-[#7f1d1d] hover:underline"
+            className="mt-8 cursor-pointer text-xs font-medium text-gray-500 transition hover:text-[#167a78] hover:underline"
           >
             ← Back to website
           </button>
