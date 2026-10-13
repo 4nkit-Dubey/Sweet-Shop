@@ -6,6 +6,7 @@ import Add from "./pages/Add";
 import Lists from "./pages/Lists";
 import Login from "./pages/Login";
 import Order from "./pages/Order";
+import NotFound from "./pages/NotFound";
 import { adminDataContext } from "./context/AdminContext";
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/lists" element={<Lists />} />
             <Route path="/login" element={<Login />} />
             <Route path="/order" element={<Order />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </>
       )}

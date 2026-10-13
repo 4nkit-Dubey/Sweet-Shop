@@ -1,8 +1,9 @@
-achha bhai thoda tera help chahiye.
-admin me jo home page hai ussme kya karna chahiye.
-path : "admin\src\pages\Home.jsx"
+achha bro tumhare liye ek kaam hai.
+tumko ek 404 ka page banana hai.
+Dono admin aur client ke liye.
+usko app.jsx me add bhi karna hai.
+maine bs file create kar diya hai "NotFound.jsx" ke naam se
+a) client : "client\src\pages\NotFound.jsx"
+b) admin : "admin\src\pages\NotFound.jsx"
 
-tere pass koi idea hai.
-
-agar ha tooh bata ham discuss kar lete hai.
-fr usko at last usko project me implement bhi kar lenge.
+isme ek responsive styling bhi add kar dena.

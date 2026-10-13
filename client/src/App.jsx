@@ -16,6 +16,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import PlaceOrder from "./pages/PlaceOrder";
 import Order from "./pages/Order";
+import NotFound from "./pages/NotFound";
 
 function App() {
   let { userData } = useContext(userDataContext);
@@ -154,6 +155,7 @@ function App() {
             )
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
