@@ -12,7 +12,8 @@ const App = () => {
   let { adminData } = useContext(adminDataContext);
   return (
     <>
-      <Toaster theme="dark" position="top-right" />
+      <Toaster theme="dark" position="top-right" className="hidden md:block" />
+      <Toaster theme="dark" position="bottom-center" className="md:hidden" />
       {!adminData ? (
         <Login />
       ) : (
