@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 import { shopDataContext } from "../contexts/ShopContext";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalfAlt } from "react-icons/fa";
@@ -37,6 +38,15 @@ const ProductDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId]);
+
+  const handleAddToCart = () => {
+    if (!size) {
+      toast.error("Please select a size first");
+      return;
+    }
+    addToCart(productData._id, size);
+    toast.success("Product added to cart! 🛒");
+  };
 
   return productData ? (
     <div className="w-full min-h-screen bg-gradient-to-b from-[#0c2025] via-[#0f2a31] to-[#141414] overflow-x-hidden">
@@ -129,7 +139,7 @@ const ProductDetails = () => {
             {/* Add to Cart */}
             <button
               className="w-full py-3 px-6 bg-[#a5faf7] text-[#0c2025] font-bold rounded-xl hover:bg-[#a5faf7]/90 transition-all duration-300 shadow-[0_0_15px_rgba(165,250,247,0.3)] hover:shadow-[0_0_20px_rgba(165,250,247,0.5)]"
-              onClick={() => addToCart(productData._id, size)}
+              onClick={handleAddToCart}
             >
               Add To Cart
             </button>

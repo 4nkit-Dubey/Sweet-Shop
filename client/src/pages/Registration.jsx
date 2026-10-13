@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { toast } from "sonner";
 import logo from "../assets/favicon.png";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
@@ -28,12 +29,14 @@ const Registration = () => {
         name,
         email,
         password,
-      },{withCredentials: true}); 
+      },{withCredentials: true});
       console.log(result.data);
       getCurrentUser();
+      toast.success("Account created successfully! 🎉");
       navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to create account. Please try again.");
     }
   };
 
@@ -49,7 +52,7 @@ const Registration = () => {
       const name = user.displayName;
       const email = user.email;
       const firebaseUid = user.uid;
-      
+
 
       const result = await axios.post(serverUrl + "/api/auth/googleSignup", {
         name,
@@ -58,9 +61,11 @@ const Registration = () => {
       },{withCredentials: true});
       console.log(result.data);
       getCurrentUser();
+      toast.success("Signed up with Google! 🎉");
       navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error("Google signup failed. Please try again.");
     }
   };
 

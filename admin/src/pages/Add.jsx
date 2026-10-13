@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { FaCheck } from "react-icons/fa";
+import { toast } from "sonner";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
 import uplodImage from "../assets/uploadImage.jpg";
@@ -88,14 +89,15 @@ const Add = () => {
         setImage2(false);
         setImage3(false);
         setImage4(false);
+        toast.success("Product added successfully! 🎉");
       }
     } catch (error) {
       console.error("Error adding product:", error.response?.data || error);
-      setErrorMessage(
-        error.response?.data?.error ||
+      const errorMsg = error.response?.data?.error ||
           error.response?.data?.message ||
-          "Unable to add product. Please try again.",
-      );
+          "Unable to add product. Please try again.";
+      setErrorMessage(errorMsg);
+      toast.error("Failed to add product. Please try again.");
     } finally {
       setLoading(false);
     }

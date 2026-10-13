@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "sonner";
 import Home from "./pages/Home";
 import Add from "./pages/Add";
 import Lists from "./pages/Lists";
@@ -11,6 +12,7 @@ const App = () => {
   let { adminData } = useContext(adminDataContext);
   return (
     <>
+      <Toaster theme="dark" position="top-right" />
       {!adminData ? (
         <Login />
       ) : (

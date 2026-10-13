@@ -1,5 +1,6 @@
 import Title from "../components/Title";
 import { useContext } from "react";
+import { toast } from "sonner";
 import { shopDataContext } from "../contexts/ShopContext";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -21,6 +22,11 @@ const Cart = () => {
       }
     }
   }
+
+  const handleRemoveItem = (productId, size) => {
+    updateQuantity(productId, size, 0);
+    toast.success("Item removed from cart ✓");
+  };
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-[#0c2025] via-[#0f2a31] to-[#141414] overflow-x-hidden">
@@ -90,7 +96,7 @@ const Cart = () => {
                             </div>
                           </div>
                           <button
-                            onClick={() => updateQuantity(item._id, item.size, 0)}
+                            onClick={() => handleRemoveItem(item._id, item.size)}
                             className="shrink-0 rounded-lg p-2 text-white/50 transition-colors hover:bg-red-400/10 hover:text-red-400"
                             aria-label={`Remove ${productData.name} from cart`}
                           >

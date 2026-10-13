@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { toast } from "sonner";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
 import { authDataContext } from "../context/AuthContext";
@@ -27,11 +28,14 @@ const Lists = () => {
       );
       if (result.data) {
         fetchList();
+        toast.success("Product removed successfully! ✓");
       } else {
         console.log("Failed to remove product");
+        toast.error("Failed to remove product. Please try again.");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Failed to remove product. Please try again.");
     }
   };
 

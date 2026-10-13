@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Toaster } from "sonner";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <>
+      <Toaster theme="dark" position="top-right" />
       {!hideNavBar && <NavBar />}
       <Routes>
         <Route

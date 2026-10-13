@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { TbTruckDelivery } from "react-icons/tb";
 import Title from "../components/Title";
 import razorpay from "../assets/razorpay.webp";
@@ -64,14 +65,15 @@ const PlaceOrder = () => {
       }
       setPendingPayment(null);
       setCartItem({});
+      toast.success("Payment verified! Order confirmed ✓");
       navigate("/order");
     } catch (error) {
       setPendingPayment(paymentResponse);
-      setSubmitError(
-        error?.response?.data?.message ||
+      const errorMsg = error?.response?.data?.message ||
           error?.message ||
-          "Payment verification failed. Please retry verification.",
-      );
+          "Payment verification failed. Please retry verification.";
+      setSubmitError(errorMsg);
+      toast.error("Payment failed. Your cart is still available.");
     } finally {
       setIsSubmitting(false);
     }
@@ -114,6 +116,7 @@ const PlaceOrder = () => {
           throw new Error("The order could not be confirmed. Please try again.");
         }
         setCartItem({});
+        toast.success("Order placed successfully! 🎉");
         navigate("/order");
         return;
       }
@@ -167,11 +170,11 @@ const PlaceOrder = () => {
       checkout.open();
       checkoutOpened = true;
     } catch (error) {
-      setSubmitError(
-        error?.response?.data?.message ||
+      const errorMsg = error?.response?.data?.message ||
           error?.message ||
-          "Unable to place your order. Please try again.",
-      );
+          "Unable to place your order. Please try again.";
+      setSubmitError(errorMsg);
+      toast.error("Failed to place order. Please try again.");
     } finally {
       if (!checkoutOpened) {
         setIsSubmitting(false);

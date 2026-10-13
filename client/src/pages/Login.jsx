@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { VscEye, VscEyeClosed} from "react-icons/vsc";
+import { toast } from "sonner";
 import logo from "../assets/favicon.png";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
@@ -27,10 +28,12 @@ const Login = () => {
       },{withCredentials: true});
       console.log(result.data);
       getCurrentUser();
+      toast.success("Logged in successfully! ✓");
       navigate("/");
     }
     catch (error) {
       console.log(error);
+      toast.error("Login failed. Check email and password.");
     }
   };
 
@@ -46,7 +49,7 @@ const Login = () => {
       const name = user.displayName;
       const email = user.email;
       const firebaseUid = user.uid;
-      
+
 
       const result = await axios.post(serverUrl + "/api/auth/googleSignup", {
         name,
@@ -55,9 +58,11 @@ const Login = () => {
       },{withCredentials: true});
       console.log(result.data);
       getCurrentUser();
+      toast.success("Logged in with Google! ✓");
       navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error("Google login failed. Please try again.");
     }
   };
 

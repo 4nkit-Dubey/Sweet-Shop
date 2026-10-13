@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 import { SiEbox } from "react-icons/si";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
@@ -75,12 +76,13 @@ const Order = () => {
           order._id === orderId ? { ...order, status } : order,
         ),
       );
+      toast.success("Order status updated! ✓");
     } catch (error) {
-      setStatusError(
-        error?.response?.data?.message ||
+      const errorMsg = error?.response?.data?.message ||
           error?.message ||
-          "Unable to update order status. Please try again.",
-      );
+          "Unable to update order status. Please try again.";
+      setStatusError(errorMsg);
+      toast.error("Unable to update order status. Please try again.");
       setIsLoading(true);
       setRefreshCount((count) => count + 1);
     } finally {

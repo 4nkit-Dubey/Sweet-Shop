@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { toast } from "sonner";
 import logo from "../assets/favicon.png";
 import { useNavigate } from "react-router-dom";
 import { authDataContext } from "../context/AuthContext.jsx";
@@ -35,13 +36,14 @@ const Login = () => {
       );
       console.log(result.data);
       await getAdmin();
+      toast.success("Admin login successful! ✓");
       navigate(ADMIN_HOME);
     } catch (err) {
       console.log(err);
-      setError(
-        err.response?.data?.message ||
-          "Could not sign in. Check your email and password, then try again.",
-      );
+      const errorMsg = err.response?.data?.message ||
+          "Could not sign in. Check your email and password, then try again.";
+      setError(errorMsg);
+      toast.error("Could not sign in. Check credentials and try again.");
     } finally {
       setLoading(false);
     }

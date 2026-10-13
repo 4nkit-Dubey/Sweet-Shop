@@ -1,4 +1,5 @@
 import { use, useContext, useState } from "react";
+import { toast } from "sonner";
 import logo from "../assets/1.png";
 import { LuSearch, LuMenu, LuX, LuShoppingBag, LuHouse, LuCandy, LuCookie } from "react-icons/lu";
 import { FaCircleUser } from "react-icons/fa6";
@@ -31,8 +32,11 @@ function NavBar() {
       });
       console.log(result.data);
       getCurrentUser();
+      toast.success("Logged out successfully ✓");
+      navigate("/login");
     } catch (error) {
       console.log(error);
+      toast.error("Logout failed. Please try again.");
     }
   };
   const openMobileSearch = () => {
