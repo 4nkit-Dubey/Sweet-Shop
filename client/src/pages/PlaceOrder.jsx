@@ -17,6 +17,8 @@ const PlaceOrder = () => {
   const { serverUrl } = useContext(authDataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [pendingPayment, setPendingPayment] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cod");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -48,6 +50,33 @@ const PlaceOrder = () => {
     setFormData((data) => ({ ...data, [name]: value }));
   };
 
+  const verifyPayment = async (paymentResponse) => {
+    setIsSubmitting(true);
+    setSubmitError("");
+    try {
+      const verification = await axios.post(
+        `${serverUrl}/api/order/razorpay/verify`,
+        paymentResponse,
+        { withCredentials: true },
+      );
+      if (!verification.data?.message) {
+        throw new Error("Payment could not be verified. Please retry verification.");
+      }
+      setPendingPayment(null);
+      setCartItem({});
+      navigate("/order");
+    } catch (error) {
+      setPendingPayment(paymentResponse);
+      setSubmitError(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Payment verification failed. Please retry verification.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     setSubmitError("");
@@ -63,6 +92,7 @@ const PlaceOrder = () => {
     }
 
     setIsSubmitting(true);
+    let checkoutOpened = false;
     try {
       const orderItems = cartLines.map(({ product, size, quantity }) => ({
         ...product,
@@ -74,18 +104,68 @@ const PlaceOrder = () => {
         items: orderItems,
         amount: total,
       };
+      if (paymentMethod === "cod") {
+        const result = await axios.post(
+          `${serverUrl}/api/order/placeorder`,
+          orderData,
+          { withCredentials: true },
+        );
+        if (!result.data?.message) {
+          throw new Error("The order could not be confirmed. Please try again.");
+        }
+        setCartItem({});
+        navigate("/order");
+        return;
+      }
+
+      if (!window.Razorpay) {
+        throw new Error("Razorpay checkout did not load. Please refresh and try again.");
+      }
+
       const result = await axios.post(
-        `${serverUrl}/api/order/placeorder`,
+        `${serverUrl}/api/order/razorpay`,
         orderData,
         { withCredentials: true },
       );
-
-      if (!result.data?.message) {
-        throw new Error("The order could not be confirmed. Please try again.");
+      const { order, keyId } = result.data || {};
+      if (!order?.id || !keyId) {
+        throw new Error("Unable to start Razorpay checkout. Please try again.");
       }
 
-      setCartItem({});
-      navigate("/order");
+      const checkout = new window.Razorpay({
+        key: keyId,
+        amount: order.amount,
+        currency: order.currency,
+        name: "Maa Vindhyavasini Sweets",
+        description: "Order payment",
+        order_id: order.id,
+        prefill: {
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          email: formData.email,
+          contact: formData.phone,
+        },
+        notes: {
+          shippingAddress: `${formData.street}, ${formData.city}, ${formData.state}, ${formData.pincode}`,
+        },
+        theme: { color: "#0f5b5c" },
+        handler: async (response) => {
+          setPendingPayment(response);
+          await verifyPayment(response);
+        },
+        modal: {
+          ondismiss: () => setIsSubmitting(false),
+        },
+      });
+
+      checkout.on("payment.failed", (response) => {
+        setSubmitError(
+          response.error?.description ||
+            "Payment failed. Your cart is still available to retry.",
+        );
+        setIsSubmitting(false);
+      });
+      checkout.open();
+      checkoutOpened = true;
     } catch (error) {
       setSubmitError(
         error?.response?.data?.message ||
@@ -93,7 +173,9 @@ const PlaceOrder = () => {
           "Unable to place your order. Please try again.",
       );
     } finally {
-      setIsSubmitting(false);
+      if (!checkoutOpened) {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -258,9 +340,19 @@ const PlaceOrder = () => {
                 </p>
               )}
               {submitError && (
-                <p className="mt-5 rounded-xl border border-red-400/25 bg-red-400/10 px-4 py-3 text-sm text-red-200" role="alert">
-                  {submitError}
-                </p>
+                <div className="mt-5 rounded-xl border border-red-400/25 bg-red-400/10 px-4 py-3 text-sm text-red-200" role="alert">
+                  <p>{submitError}</p>
+                  {pendingPayment && (
+                    <button
+                      type="button"
+                      onClick={() => verifyPayment(pendingPayment)}
+                      disabled={isSubmitting}
+                      className="mt-3 rounded-lg border border-red-200/30 px-3 py-2 text-xs font-semibold transition hover:bg-red-200/10 disabled:opacity-50"
+                    >
+                      {isSubmitting ? "VERIFYING..." : "RETRY PAYMENT VERIFICATION"}
+                    </button>
+                  )}
+                </div>
               )}
 
               <button
@@ -268,7 +360,13 @@ const PlaceOrder = () => {
                 disabled={isSubmitting || hasUnavailableProducts}
                 className="mt-7 w-full rounded-xl bg-[#a5faf7] px-6 py-3.5 font-bold text-[#0c2025] shadow-[0_0_18px_rgba(165,250,247,0.2)] transition hover:bg-[#a5faf7]/90 hover:shadow-[0_0_24px_rgba(165,250,247,0.35)] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:min-w-56"
               >
-                {isSubmitting ? "PLACING ORDER..." : "PLACE ORDER"}
+                {isSubmitting
+                  ? paymentMethod === "cod"
+                    ? "PLACING ORDER..."
+                    : "OPENING SECURE CHECKOUT..."
+                  : paymentMethod === "cod"
+                    ? "PLACE ORDER"
+                    : "PAY SECURELY"}
               </button>
             </form>
 
@@ -321,31 +419,50 @@ const PlaceOrder = () => {
               <section className="rounded-3xl border border-white/10 bg-white/[0.045] p-5 backdrop-blur-sm sm:p-7">
                 <h2 className="mb-4 text-lg font-bold text-[#c3f6ca]">Payment method</h2>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 rounded-2xl border border-[#a5faf7]/40 bg-[#a5faf7]/[0.07] p-4">
+                  <label className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition-colors ${
+                    paymentMethod === "cod"
+                      ? "border-[#a5faf7]/40 bg-[#a5faf7]/[0.07]"
+                      : "border-white/10 bg-black/10 hover:border-white/25"
+                  }`}>
                     <input
                       type="radio"
                       name="paymentMethod"
-                      checked
-                      readOnly
-                      aria-label="Cash on delivery selected"
+                      value="cod"
+                      checked={paymentMethod === "cod"}
+                      onChange={() => setPaymentMethod("cod")}
+                      aria-label="Cash on delivery"
                       className="accent-[#a5faf7]"
                     />
                     <TbTruckDelivery className="shrink-0 text-2xl text-[#a5faf7]" />
                     <span className="text-sm font-semibold text-white">Cash on delivery</span>
-                    <span className="ml-auto rounded-full bg-[#a5faf7]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#a5faf7]">
-                      Selected
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/10 p-4 opacity-55">
+                    {paymentMethod === "cod" && (
+                      <span className="ml-auto rounded-full bg-[#a5faf7]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#a5faf7]">
+                        Selected
+                      </span>
+                    )}
+                  </label>
+                  <label className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition-colors ${
+                    paymentMethod === "razorpay"
+                      ? "border-[#a5faf7]/40 bg-[#a5faf7]/[0.07]"
+                      : "border-white/10 bg-black/10 hover:border-white/25"
+                  }`}>
                     <input
                       type="radio"
                       name="paymentMethod"
-                      disabled
-                      aria-label="Razorpay coming soon"
+                      value="razorpay"
+                      checked={paymentMethod === "razorpay"}
+                      onChange={() => setPaymentMethod("razorpay")}
+                      aria-label="Pay online with Razorpay"
+                      className="accent-[#a5faf7]"
                     />
                     <img src={razorpay} alt="Razorpay" className="h-6 w-20 object-contain" />
-                    <span className="ml-auto text-xs text-white/60">Coming soon</span>
-                  </div>
+                    <span className="text-sm font-semibold text-white">Pay online</span>
+                    {paymentMethod === "razorpay" && (
+                      <span className="ml-auto rounded-full bg-[#a5faf7]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#a5faf7]">
+                        Selected
+                      </span>
+                    )}
+                  </label>
                 </div>
               </section>
             </aside>

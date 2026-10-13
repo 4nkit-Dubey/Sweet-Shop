@@ -51,7 +51,7 @@ const Login = () => {
     <div className="grid min-h-screen lg:grid-cols-[1.05fr_1fr]">
       {/* ================= LEFT : BRAND PANEL ================= */}
       <div
-        className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-br from-[#0c2025] via-[#10282e] to-[#141414] p-12 text-white lg:flex"
+        className="relative hidden flex-col justify-between overflow-hidden bg-linear-to-br from-[#0c2025] via-[#10282e] to-[#141414] p-12 text-white lg:flex"
         style={{ backgroundImage: jaaliPattern }}
       >
         <div className="flex items-center gap-3">

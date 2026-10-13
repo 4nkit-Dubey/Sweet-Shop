@@ -94,7 +94,7 @@ const Order = () => {
   };
 
   return (
-    <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-[#0c2025] via-[#10282e] to-[#141414]">
+    <div className="fixed inset-0 overflow-hidden bg-linear-to-br from-[#0c2025] via-[#10282e] to-[#141414]">
       <Nav />
       <Sidebar />
 
@@ -180,7 +180,7 @@ const Order = () => {
                     key={order._id}
                     className="overflow-hidden rounded-2xl border border-white/15 bg-black/25 shadow-lg shadow-black/10 transition-colors hover:border-white/35"
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-white/[0.025] px-4 py-3 sm:px-5">
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-white/2.5 px-4 py-3 sm:px-5">
                       <div className="flex min-w-0 items-center gap-3">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/5">
                           <SiEbox className="text-lg text-[#a5faf7]" />

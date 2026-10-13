@@ -13,7 +13,13 @@ dotenv.config();
 const PORT = process.env.PORT || 6000;
 const app = express();
 
-app.use(express.json())
+app.use(express.json({
+  verify: (req, res, buffer) => {
+    if (req.originalUrl === "/api/order/razorpay/webhook") {
+      req.rawBody = Buffer.from(buffer);
+    }
+  },
+}))
 app.use(cookieParser())
 app.use(cors({
   origin: ["http://localhost:5173", "http://localhost:5174"],
