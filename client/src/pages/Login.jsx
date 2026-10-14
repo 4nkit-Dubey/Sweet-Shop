@@ -9,18 +9,22 @@ import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../utils/FireBase";
 import { userDataContext } from "../contexts/UserContext";
+import Loader from "../components/Loader";
 
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const {serverUrl} = useContext(authDataContext);
   const {getCurrentUser} = useContext(userDataContext);
   const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       const result = await axios.post(serverUrl + '/api/auth/login', {
         email,
@@ -35,10 +39,14 @@ const Login = () => {
       console.log(error);
       toast.error("Login failed. Check email and password.");
     }
+    finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleGoogleLogin = async (e) => {
     e.preventDefault();
+    setIsGoogleLoading(true);
     try {
       if (!auth) {
         console.error("Google login is unavailable: Firebase API key is missing.");
@@ -63,6 +71,9 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       toast.error("Google login failed. Please try again.");
+    }
+    finally {
+      setIsGoogleLoading(false);
     }
   };
 
@@ -291,6 +302,7 @@ const Login = () => {
               {/* Login Button */}
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="
                   w-full
                   px-5 py-3.5
@@ -300,9 +312,17 @@ const Login = () => {
                   shadow-sm
                   cursor-pointer
                   transition hover:bg-[#681818] active:scale-[0.99]
+                  disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2
                 "
               >
-                Login to your account
+                {isSubmitting ? (
+                  <>
+                    <Loader type="button" />
+                    <span>Signing in...</span>
+                  </>
+                ) : (
+                  "Login to your account"
+                )}
               </button>
 
               {/* Divider */}
@@ -341,6 +361,7 @@ const Login = () => {
               {/* Google */}
               <button
                 type="button"
+                disabled={isGoogleLoading}
                 className="
                   flex
                   w-full
@@ -351,6 +372,7 @@ const Login = () => {
                   shadow-sm
                   items-center justify-center gap-3 transition hover:bg-gray-50 active:scale-[0.99]
                   cursor-pointer
+                  disabled:opacity-70 disabled:cursor-not-allowed
                 "
                 onClick={handleGoogleLogin}
               >
@@ -360,9 +382,9 @@ const Login = () => {
                     font-bold text-base
                   "
                 >
-                  <FcGoogle />
+                  {isGoogleLoading ? <Loader type="button" /> : <FcGoogle />}
                 </span>
-                Continue with Google
+                {isGoogleLoading ? "Signing in..." : "Continue with Google"}
               </button>
             </form>
 

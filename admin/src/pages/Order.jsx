@@ -5,6 +5,7 @@ import { SiEbox } from "react-icons/si";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
 import { authDataContext } from "../context/AuthContext";
+import Loader from "../components/Loader";
 
 const statusStyles = {
   "Order Placed": "border-sky-300/25 bg-sky-300/10 text-sky-200",
@@ -157,12 +158,7 @@ const Order = () => {
               </button>
             </div>
           ) : isLoading ? (
-            <div
-              className="rounded-2xl border border-white/15 bg-black/20 px-6 py-16 text-center text-sm text-white/60"
-              role="status"
-            >
-              Loading orders...
-            </div>
+            <Loader message="Loading orders..." />
           ) : orders.length === 0 ? (
             <div className="rounded-2xl border border-white/15 bg-black/20 px-6 py-16 text-center">
               <SiEbox className="mx-auto text-4xl text-[#a5faf7]/70" />

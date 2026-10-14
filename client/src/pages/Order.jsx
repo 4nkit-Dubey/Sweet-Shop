@@ -3,6 +3,7 @@ import axios from "axios";
 import Title from "../components/Title";
 import { authDataContext } from "../contexts/AuthContext";
 import { shopDataContext } from "../contexts/ShopContext";
+import Loader from "../components/Loader";
 
 const Order = () => {
   const [orderData, setOrderData] = useState([]);
@@ -105,12 +106,7 @@ const Order = () => {
         )}
 
         {isLoading ? (
-          <div
-            className="rounded-3xl border border-white/10 bg-white/5 px-6 py-16 text-center text-white/60 backdrop-blur-sm"
-            role="status"
-          >
-            Loading your orders...
-          </div>
+          <Loader message="Loading your orders..." />
         ) : orderData.length === 0 && !loadError ? (
           <div className="rounded-3xl border border-white/10 bg-white/5 px-6 py-16 text-center backdrop-blur-sm">
             <p className="text-xl font-semibold text-white sm:text-2xl">

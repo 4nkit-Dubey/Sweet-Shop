@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Title from "./Title";
 import { shopDataContext } from "../contexts/ShopContext";
 import Card from "./Card";
+import Loader from "./Loader";
 
 const LatestCollections = () => {
   const { products } = useContext(shopDataContext);
@@ -23,9 +24,7 @@ const LatestCollections = () => {
 
       {/* Products grid */}
       {latestProducts.length === 0 ? (
-        <div className="flex items-center justify-center py-16">
-          <p className="text-blue-200/50 text-sm">Loading products...</p>
-        </div>
+        <Loader message="Loading latest collections..." />
       ) : (
         <div className="grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-8">
           {latestProducts.map((item, index) => (

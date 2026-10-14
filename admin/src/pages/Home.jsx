@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
 import { authDataContext } from "../context/AuthContext";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -157,9 +158,7 @@ const Home = () => {
           {/* LOADING STATE */}
           {/* ═══════════════════════════════════════════════════════════ */}
           {isLoading ? (
-            <div className="rounded-2xl border border-white/15 bg-black/20 px-6 py-16 text-center text-sm text-white/60">
-              Loading dashboard...
-            </div>
+            <Loader message="Loading dashboard..." />
           ) : (
             <>
               {/* ═══════════════════════════════════════════════════════════ */}
