@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import { useContext, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { toast } from "sonner";
@@ -6,6 +7,7 @@ import Sidebar from "../components/Sidebar";
 import uplodImage from "../assets/uploadImage.jpg";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
+import logger from "../utils/logger.js";
 
 const quantityOptions = ["1pcs","100g", "500g", "1kg", "2kg"];
 
@@ -75,7 +77,7 @@ const Add = () => {
 
       let result = await axios.post(serverUrl + "/api/product/addproduct", formData, { withCredentials: true });
 
-      console.log(result.data);
+      logger.log(result.data);
 
       if (result.data){
         setName("");
@@ -92,7 +94,7 @@ const Add = () => {
         toast.success("Product added successfully! 🎉");
       }
     } catch (error) {
-      console.error("Error adding product:", error.response?.data || error);
+      logger.error("Error adding product:", error.response?.data || error);
       const errorMsg = error.response?.data?.error ||
           error.response?.data?.message ||
           "Unable to add product. Please try again.";

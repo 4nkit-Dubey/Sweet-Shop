@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
+import logger from "../utils/logger.js";
 
 export const generateToken = async (userId) => {
     try{
       const token = await jwt.sign({userId}, process.env.JWT_SECRET);
       return token;
     }catch(error){
-        console.log("Error in generating token");
+        logger.log("Error in generating token");
     }
 }
 export const generateAdminToken = async (email) => {
@@ -13,6 +14,6 @@ export const generateAdminToken = async (email) => {
       const token = await jwt.sign({email}, process.env.JWT_SECRET);
       return token;
     }catch(error){
-        console.log("Error in generating token");
+        logger.log("Error in generating token");
     }
 }

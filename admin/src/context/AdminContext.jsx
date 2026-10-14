@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { authDataContext } from "./AuthContext";
 import axios from "axios";
@@ -13,10 +14,10 @@ const AdminContext = ({ children }) => {
         withCredentials: true,
       });
       setAdminData(result.data);
-      console.log(result.data);
+      logger.log(result.data);
     } catch (error) {
       setAdminData(null);
-      console.log(error);
+      logger.log(error);
     }
   };
 

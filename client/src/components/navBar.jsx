@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
 import logo from "../assets/1.png";
@@ -38,12 +39,12 @@ function NavBar() {
       const result = await axios.get(serverUrl + "/api/auth/logout", {
         withCredentials: true,
       });
-      console.log(result.data);
+      logger.log(result.data);
       getCurrentUser();
       toast.success("Logged out successfully ✓");
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      logger.log(error);
       toast.error("Logout failed. Please try again.");
     }
   };

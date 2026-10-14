@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import logger from "../utils/logger.js";
 
 export const isAuth = async (req, res, next) => {
   try {
@@ -21,7 +22,7 @@ export const isAuth = async (req, res, next) => {
     next();
 
   } catch (error) {
-    console.error("Error in isAuth:", error);
+    logger.error("Error in isAuth:", error);
     return res.status(500).json({
       message: `isAuth error: ${error.message}`,
     });

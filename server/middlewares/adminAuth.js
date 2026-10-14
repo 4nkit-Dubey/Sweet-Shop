@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import logger from "../utils/logger.js";
 
 const adminAuth = (req, res, next) => {
   try {
@@ -14,7 +15,7 @@ const adminAuth = (req, res, next) => {
     next();
 
   } catch (error) {
-    console.error("Error in adminAuth:", error);
+    logger.error("Error in adminAuth:", error);
     return res.status(500).json({
       message: `adminAuth error: ${error.message}`,
     });

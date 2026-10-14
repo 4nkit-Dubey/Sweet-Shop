@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import React from "react";
 import { createContext, useContext, useState } from "react";
 import { authDataContext } from "./AuthContext.jsx";
@@ -15,11 +16,11 @@ function UserContext ({ children }) {
         withCredentials: true,
       });
       setUserData(response.data);
-      // console.log(response.data);
+      // logger.log(response.data);
     } catch (error) {
       setUserData(null);
       if (error.response?.status !== 401) {
-        console.error("Error fetching current user:", error);
+        logger.error("Error fetching current user:", error);
       }
     }
   };

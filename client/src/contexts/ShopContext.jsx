@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import { createContext, useContext, useEffect, useState } from "react";
 import { authDataContext } from "./AuthContext";
 import { userDataContext } from "./UserContext";
@@ -16,16 +17,16 @@ const ShopContext = ({ children }) => {
   const getProducts = async () => {
     try {
       let result = await axios.get(serverUrl + "/api/product/list");
-      console.log(result.data);
+      logger.log(result.data);
       setProducts(result.data.product);
     } catch (error) {
-      console.log("Error fetching products:", error);
+      logger.log("Error fetching products:", error);
     }
   };
 
   const addToCart = async (itemId, size) => {
     if (!size) {
-      console.log("Select product size");
+      logger.log("Select product size");
       return;
     }
     let cartData = structuredClone(cartItem);
@@ -47,12 +48,12 @@ const ShopContext = ({ children }) => {
           { itemId, size },
           { withCredentials: true },
         );
-        console.log(result.data);
+        logger.log(result.data);
       } catch (error) {
-        console.log(error);
+        logger.log(error);
       }
     } else {
-      console.log("User not logged in. Cart data will not be saved to server.");
+      logger.log("User not logged in. Cart data will not be saved to server.");
     }
   };
 
@@ -65,7 +66,7 @@ const ShopContext = ({ children }) => {
       );
       setCartItem(result.data.cartData);
     } catch (error) {
-      console.log("Error fetching user cart:", error);
+      logger.log("Error fetching user cart:", error);
     }
   };
 
@@ -81,7 +82,7 @@ const ShopContext = ({ children }) => {
           { withCredentials: true },
         );
       } catch (error) {
-        console.log("Error updating cart quantity:", error);
+        logger.log("Error updating cart quantity:", error);
       }
     }
   };

@@ -1,4 +1,5 @@
 import User from "../models/userModel.js";
+import logger from "../utils/logger.js";
 
 export const getCurrentUser = async (req, res) => {
   try {
@@ -10,7 +11,7 @@ export const getCurrentUser = async (req, res) => {
     }
     return res.status(200).json(user);
   } catch (error) {
-    console.error("Error in getCurrentUser:", error);
+    logger.error("Error in getCurrentUser:", error);
     return res.status(500).json({
       message: `getCurrentUser error: ${error.message}`,
     });
@@ -27,7 +28,7 @@ export const getAdmin = async (req, res) => {
     }
     return res.status(201).json({ email: adminEmail, role: "admin" });
   } catch (error) {
-    console.error("Error in getAdmin:", error);
+    logger.error("Error in getAdmin:", error);
     return res.status(500).json({
       message: `getAdmin error: ${error.message}`,
     });

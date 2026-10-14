@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import React, { useContext, useState } from "react";
 import { VscEye, VscEyeClosed} from "react-icons/vsc";
 import { toast } from "sonner";
@@ -30,13 +31,13 @@ const Login = () => {
         email,
         password,
       },{withCredentials: true});
-      console.log(result.data);
+      logger.log(result.data);
       getCurrentUser();
       toast.success("Logged in successfully! ✓");
       navigate("/");
     }
     catch (error) {
-      console.log(error);
+      logger.log(error);
       toast.error("Login failed. Check email and password.");
     }
     finally {
@@ -49,7 +50,7 @@ const Login = () => {
     setIsGoogleLoading(true);
     try {
       if (!auth) {
-        console.error("Google login is unavailable: Firebase API key is missing.");
+        logger.error("Google login is unavailable: Firebase API key is missing.");
         return;
       }
       const response = await signInWithPopup(auth, provider);
@@ -64,12 +65,12 @@ const Login = () => {
         email,
         firebaseUid,
       },{withCredentials: true});
-      console.log(result.data);
+      logger.log(result.data);
       getCurrentUser();
       toast.success("Logged in with Google! ✓");
       navigate("/");
     } catch (error) {
-      console.log(error);
+      logger.log(error);
       toast.error("Google login failed. Please try again.");
     }
     finally {

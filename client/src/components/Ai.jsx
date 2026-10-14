@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import { useState } from "react";
 import { FaMicrophoneAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +22,7 @@ const Ai = () => {
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!speechRecognition) {
-    console.warn("Speech Recognition API not supported in this browser");
+    logger.warn("Speech Recognition API not supported in this browser");
     return null;
   }
 

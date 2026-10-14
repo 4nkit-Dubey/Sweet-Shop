@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { authDataContext } from "../context/AuthContext.jsx";
 import { adminDataContext } from "../context/AdminContext.jsx";
 import axios from "axios";
+import logger from "../utils/logger.js";
 
 const ADMIN_LOGIN_ENDPOINT = "/api/auth/adminLogin";
 const ADMIN_HOME = "/";
@@ -39,7 +40,7 @@ const Login = () => {
       toast.success("Admin login successful! ✓");
       navigate(ADMIN_HOME);
     } catch (err) {
-      console.log(err);
+      logger.log(err);
       const errorMsg = err.response?.data?.message ||
           "Could not sign in. Check your email and password, then try again.";
       setError(errorMsg);

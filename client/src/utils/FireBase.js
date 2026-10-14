@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
@@ -16,7 +17,7 @@ const auth = app ? getAuth(app) : null;
 const provider = new GoogleAuthProvider();
 
 if (!firebaseConfig.apiKey) {
-  console.warn("Firebase is disabled: VITE_FIREBASE_API_KEY is missing.");
+  logger.warn("Firebase is disabled: VITE_FIREBASE_API_KEY is missing.");
 }
 
 export { auth, provider };

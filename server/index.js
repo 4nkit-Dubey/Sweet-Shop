@@ -8,6 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import logger from "./utils/logger.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 6000;
@@ -34,6 +35,6 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  logger.log(`Server is running on http://localhost:${PORT}`);
   connectDb();
 });

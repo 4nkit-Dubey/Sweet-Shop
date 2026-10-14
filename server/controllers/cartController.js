@@ -1,4 +1,5 @@
 import User from '../models/userModel.js';
+import logger from '../utils/logger.js';
 
 
 
@@ -29,7 +30,7 @@ export const addToCart = async (req, res) => {
     return res.status(201).json({ message: 'Item added to cart successfully' });
 
   } catch (error) {
-    console.log(error)
+    logger.log(error)
     return res.status(500).json({ message: 'Failed to add item to cart', error: error.message });
   }
 
@@ -47,7 +48,7 @@ export const updateCart = async (req, res) => {
     await User.findByIdAndUpdate(req.userId, { cartData })
     return res.status(200).json({ message: 'Cart updated successfully' });
   } catch (error) {
-    console.log(error)
+    logger.log(error)
     return res.status(500).json({ message: 'Failed to update cart', error: error.message });
   }
 
@@ -61,7 +62,7 @@ export const getUserCart = async (req, res) => {
     let cartData = userData.cartData || {};
     return res.status(200).json({ cartData });
   } catch (error) {
-    console.log(error)
+    logger.log(error)
     return res.status(500).json({ message: 'Failed to get cart data', error: error.message });
   }
 

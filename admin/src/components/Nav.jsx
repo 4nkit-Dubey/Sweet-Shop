@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import { useContext } from 'react'
 import logo from '../assets/favicon.png';
 import { CgLogOut } from "react-icons/cg";
@@ -14,11 +15,11 @@ const Nav = () => {
   const handleLogout = async () => {
     try {
       const result = await axios.get(serverUrl + "/api/auth/logout", { withCredentials: true });
-      console.log(result.data);
+      logger.log(result.data);
       await getAdmin();
       navigate("/login");
     } catch (error) {
-      console.error("Error logging out:", error);
+      logger.error("Error logging out:", error);
     }
   }
   return (

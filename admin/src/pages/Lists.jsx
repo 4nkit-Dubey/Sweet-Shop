@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import Sidebar from "../components/Sidebar";
@@ -14,7 +15,7 @@ const Lists = () => {
       let result = await axios.get(serverUrl + "/api/product/list");
       setList(result.data.product ?? []);
     } catch (error) {
-      console.log(error);
+      logger.log(error);
     }
   };
 
@@ -30,11 +31,11 @@ const Lists = () => {
         fetchList();
         toast.success("Product removed successfully! ✓");
       } else {
-        console.log("Failed to remove product");
+        logger.log("Failed to remove product");
         toast.error("Failed to remove product. Please try again.");
       }
     } catch (error) {
-      console.log(error);
+      logger.log(error);
       toast.error("Failed to remove product. Please try again.");
     }
   };

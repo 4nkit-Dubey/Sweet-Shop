@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import validator from "validator";
 import User from "../models/userModel.js";
 import { generateAdminToken, generateToken } from "../configs/token.js";
+import logger from "../utils/logger.js";
 
 
 
@@ -52,7 +53,7 @@ export const registration = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    console.log("User registered successfully");
+    logger.log("User registered successfully");
 
     return res.status(201).json({
       message: "User registered successfully",
@@ -63,7 +64,7 @@ export const registration = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error in registering user:", error);
+    logger.error("Error in registering user:", error);
 
     return res.status(500).json({
       message: `Register error: ${error.message}`,
@@ -112,11 +113,11 @@ export const login = async (req, res) => {
         email: user.email,
       },
     });
-    console.log("User logged in successfully");
+    logger.log("User logged in successfully");
 
 
   } catch (error) {
-    console.error("Error in login:", error);
+    logger.error("Error in login:", error);
 
     return res.status(500).json({
       message: `Login error: ${error.message}`,
@@ -131,9 +132,9 @@ export const logout = async (req, res) => {
       message: "Logout successful",
     });
 
-    console.log("User logged out successfully");
+    logger.log("User logged out successfully");
   } catch (error) {
-    console.error("Error in logout:", error);
+    logger.error("Error in logout:", error);
 
     return res.status(500).json({
       message: `Logout error: ${error.message}`,
@@ -163,7 +164,7 @@ export const googleSignup = async (req, res) => {
     return res.status(200).json(user)
   }
   catch (error) {
-    console.error("Error in googleSignup:", error);
+    logger.error("Error in googleSignup:", error);
 
     return res.status(500).json({
       message: `googleSignup error: ${error.message}`,
@@ -188,7 +189,7 @@ export const adminLogin = async (req, res) => {
       message: "Invalid admin credentials"
     })
   } catch (error) {
-    console.log("Admin login error");
+    logger.log("Admin login error");
     return res.status(500).json({
       message: "Admin login error"
     })

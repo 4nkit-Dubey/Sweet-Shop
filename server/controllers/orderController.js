@@ -2,6 +2,7 @@ import Order from "../models/orderModel.js";
 import Product from "../models/productModel.js";
 import User from "../models/userModel.js";
 import Razorpay from "razorpay";
+import logger from "../utils/logger.js";
 import {
   isCapturedPaymentForOrder,
   verifyRazorpayPaymentSignature,
@@ -93,7 +94,7 @@ export const PlaceOrder = async (req, res) => {
     await User.findByIdAndUpdate(req.userId, { cartData: {} });
     return res.status(201).json({ message: "Order placed successfully.", orderId: order._id });
   } catch (error) {
-    console.error("Failed to place cash-on-delivery order:", error);
+    logger.error("Failed to place cash-on-delivery order:", error);
     const response = getErrorResponse(error, "Order placement failed.");
     return res.status(response.status).json({ message: response.message });
   }
@@ -104,7 +105,7 @@ export const userOrders = async (req, res) => {
     const orders = await Order.find({ userId: req.userId });
     return res.status(200).json(orders);
   } catch (error) {
-    console.error("Failed to get user orders:", error);
+    logger.error("Failed to get user orders:", error);
     return res.status(500).json({ message: "Failed to get orders." });
   }
 };
@@ -141,10 +142,10 @@ export const placeOrderRazorpay = async (req, res) => {
       try {
         await Order.findByIdAndDelete(savedOrder._id);
       } catch (cleanupError) {
-        console.error("Failed to clean up incomplete Razorpay order:", cleanupError);
+        logger.error("Failed to clean up incomplete Razorpay order:", cleanupError);
       }
     }
-    console.error("Failed to create Razorpay order:", error);
+    logger.error("Failed to create Razorpay order:", error);
     const response = getErrorResponse(error, "Unable to start Razorpay checkout.");
     return res.status(response.status).json({ message: response.message });
   }
@@ -207,7 +208,7 @@ export const verifyRazorpayPayment = async (req, res) => {
 
     return res.status(200).json({ message: "Payment verified successfully." });
   } catch (error) {
-    console.error("Failed to verify Razorpay payment:", error);
+    logger.error("Failed to verify Razorpay payment:", error);
     return res.status(500).json({ message: "Unable to verify payment. Please contact support." });
   }
 };
@@ -260,7 +261,7 @@ export const razorpayWebhook = async (req, res) => {
     await User.findByIdAndUpdate(order.userId, { cartData: {} });
     return res.status(200).json({ message: "Payment recorded successfully." });
   } catch (error) {
-    console.error("Failed to process Razorpay webhook:", error);
+    logger.error("Failed to process Razorpay webhook:", error);
     return res.status(500).json({ message: "Failed to process Razorpay webhook." });
   }
 };
@@ -271,7 +272,7 @@ export const allOrders = async (req, res) => {
     const orders = await Order.find({});
     return res.status(200).json(orders);
   } catch (error) {
-    console.error("Failed to get orders:", error);
+    logger.error("Failed to get orders:", error);
     return res.status(500).json({ message: "Failed to get orders." });
   }
 };
@@ -285,7 +286,7 @@ export const updateSatus = async (req, res) => {
     }
     return res.status(200).json({ message: "Order status updated successfully." });
   } catch (error) {
-    console.error("Failed to update order status:", error);
+    logger.error("Failed to update order status:", error);
     return res.status(500).json({ message: "Failed to update order status." });
   }
 };

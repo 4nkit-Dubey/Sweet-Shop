@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js";
 import React, { useState } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { toast } from "sonner";
@@ -30,12 +31,12 @@ const Registration = () => {
         email,
         password,
       },{withCredentials: true});
-      console.log(result.data);
+      logger.log(result.data);
       getCurrentUser();
       toast.success("Account created successfully! 🎉");
       navigate("/");
     } catch (error) {
-      console.log(error);
+      logger.log(error);
       toast.error("Failed to create account. Please try again.");
     }
   };
@@ -44,7 +45,7 @@ const Registration = () => {
     e.preventDefault();
     try {
       if (!auth) {
-        console.error("Google signup is unavailable: Firebase API key is missing.");
+        logger.error("Google signup is unavailable: Firebase API key is missing.");
         return;
       }
       const response = await signInWithPopup(auth, provider);
@@ -59,12 +60,12 @@ const Registration = () => {
         email,
         firebaseUid,
       },{withCredentials: true});
-      console.log(result.data);
+      logger.log(result.data);
       getCurrentUser();
       toast.success("Signed up with Google! 🎉");
       navigate("/");
     } catch (error) {
-      console.log(error);
+      logger.log(error);
       toast.error("Google signup failed. Please try again.");
     }
   };

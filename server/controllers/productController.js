@@ -1,5 +1,6 @@
 import uploadOnCloudinary from "../configs/cloudinary.js";
 import Product from "../models/productModel.js";
+import logger from "../utils/logger.js";
 
 export const addProduct = async (req, res) => {
   try {
@@ -55,7 +56,7 @@ export const addProduct = async (req, res) => {
       product
     });
   } catch (error) {
-    console.error("Error adding product:", error);
+    logger.error("Error adding product:", error);
     return res.status(500).json({
       message: "Error adding product",
       error: error.message
@@ -70,7 +71,7 @@ export const listProduct = async (req, res) => {
       product
     })
   } catch (error) {
-    console.log("ListProduct error")
+    logger.log("ListProduct error")
     return res.status(500).json({
       message : `ListProduct error ${error}`
     })
@@ -84,7 +85,7 @@ export const removeProduct = async(req, res) =>{
     const product = await Product.findByIdAndDelete(id)
     return res.status(200).json(product)
   } catch (error) {
-    console.log(error);
+    logger.log(error);
     return res.status(500).json({
       message : `Remove Product error ${error}`
     })
