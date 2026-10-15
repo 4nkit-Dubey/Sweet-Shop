@@ -1,4 +1,3 @@
-import logger from "../utils/logger.js";
 import { useContext, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { toast } from "sonner";
