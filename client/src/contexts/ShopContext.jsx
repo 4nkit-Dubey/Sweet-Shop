@@ -122,8 +122,10 @@ const ShopContext = ({ children }) => {
     getProducts();
   }, []);
   useEffect(() => {
-    getUserCart();
-  }, []);
+    if (userData) {
+      getUserCart();
+    }
+  }, [userData]);
 
   let value = {
     products,

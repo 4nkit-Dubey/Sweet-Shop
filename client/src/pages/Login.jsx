@@ -465,7 +465,7 @@ const Login = () => {
                   "
                 >
                   <img
-                    src="/images/sweets-login.jpg"
+                    src="/sweets-login.jpg"
                     alt="Maa Vindhyavasini Sweets"
                     className="
                       object-cover
