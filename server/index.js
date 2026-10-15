@@ -23,7 +23,7 @@ app.use(express.json({
 }))
 app.use(cookieParser())
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: ["https://sweet-shop-admin.onrender.com", "https://sweet-shop-frontend1.onrender.com"],
   credentials: true
 }))
 
