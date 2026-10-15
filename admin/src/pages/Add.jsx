@@ -105,7 +105,7 @@ const Add = () => {
   };
   return (
     <div
-      className="fixed inset-0 overflow-hidden bg-gradient-to-br from-[#0c2025] via-[#10282e] to-[#141414]"
+      className="fixed inset-0 overflow-hidden bg-linear-to-br from-[#0c2025] via-[#10282e] to-[#141414]"
     >
       <Nav />
       <Sidebar />
